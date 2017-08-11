@@ -1,0 +1,11 @@
+/target/
+/build/
+/.gradle/
+.settings
+.project
+.classpath
+/.idea/
+/*.iml
+/devdb*
+/src/main/resources/git.properties
+/data/

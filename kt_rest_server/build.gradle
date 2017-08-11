@@ -1,0 +1,71 @@
+buildscript {
+  ext.kotlin_version = '1.1.3-2'
+
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    // Needed for the 'kotlin' plugin
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    // Needed for the 'org.springframework.boot' plugin
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE"
+    // Needed for the 'kotlin-spring' plugin
+    classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+
+  }
+}
+
+// Integrating Spock Framework
+apply plugin: "groovy"
+// Allows us to compile Kotlin files
+apply plugin: 'kotlin'
+// Does some extra work to set up Spring Boot.
+// Specifically this gives us the "bootRun" task we will be using
+apply plugin: 'org.springframework.boot'
+// Allows for improved interop between Kotlin and Spring
+apply plugin: 'kotlin-spring'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  // Kotlin Dependencies
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+  testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+  testCompile("org.springframework.boot:spring-boot-starter-test")
+
+  // Spring Dependencies
+  compile("org.springframework.boot:spring-boot-starter-web") {
+    exclude module: "spring-boot-starter-tomcat"
+  }
+  compile "org.springframework.boot:spring-boot-starter-jetty"
+  compile "org.springframework.boot:spring-boot-starter-actuator"
+
+  // Jackson Dependencies
+  compile "com.fasterxml.jackson.core:jackson-annotations"
+  compile "com.fasterxml.jackson.core:jackson-core"
+  compile "com.fasterxml.jackson.core:jackson-databind"
+  runtime "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
+  runtime "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+  runtime "com.fasterxml.jackson.module:jackson-module-kotlin"
+
+  // mandatory dependencies for using Spock
+  compile "org.codehaus.groovy:groovy-all:2.4.10"
+  testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+  testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+
+  // Added to run spring data jpa
+  compile "org.springframework.boot:spring-boot-starter-data-rest"
+  compile "org.springframework.boot:spring-boot-starter-data-jpa"
+  compile "org.hibernate:hibernate-java8"
+  compile "com.h2database:h2"
+
+  // mybatis
+  compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0")
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "4.1"
+}

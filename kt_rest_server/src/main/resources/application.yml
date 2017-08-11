@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    platform: h2
+    url: "jdbc:h2:mem:"
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  jackson:
+    serialization:
+      indent_output: true
+      write_dates_as_timestamps: false
+      write_durations_as_timestamps: false
+
+management.port: -1
+
+
